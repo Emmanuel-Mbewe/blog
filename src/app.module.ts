@@ -15,7 +15,6 @@ import { UsersService } from './users/users.service';
 import { UsersController } from './users/users.controller';
 import { PostsService } from './posts/posts.service';
 import { PostsController } from './posts/posts.controller';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 @Module({
   imports: [
@@ -32,18 +31,4 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
   ],providers: [PostsService, CategoryService, CommentService, SubscriptionsService, UsersService],
   controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, UsersController]
 })
-export class AppModule {
-  // Optional: Swagger configuration method
-  static setupSwagger() {
-    const options = new DocumentBuilder()
-      .setTitle('Your API Title')
-      .setDescription('API Description')
-      .setVersion('1.0')
-      .addTag('tag1')
-      .addTag('tag2')
-      .build();
-
-    const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup('api', app, document);
-  }
-}
+export class AppModule {}
