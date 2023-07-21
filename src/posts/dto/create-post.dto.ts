@@ -1,7 +1,5 @@
 export class CreatePostDto {
-    title: string
+    title: string;
 
-    body: string
-
-    isDeleted: boolean
+    body: string;
 }

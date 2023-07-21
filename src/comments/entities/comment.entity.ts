@@ -1,13 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Post } from 'src/posts/entities/post.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
-@Entity({name: 'comments'})
+@Entity()
 export class Comments {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    comment: string;
+  @Column()
+  comment: string;
 
-    @Column({nullable:true})
-    comment_date: Date;
+  @Column({ default: () => 'CURRENT_TIMESTAMP' }) // This is just a default value
+  commentedOn: Date;
+
+  @ManyToOne(() => Post, post => post.comment)
+  post: Post;
 }
