@@ -12,7 +12,9 @@ import { SubscriptionsService } from './subscriptions/subscriptions.service';
 import { CommentsController } from './comments/comments.controller';
 import { SubscriptionsController } from './subscriptions/subscriptions.controller';
 import { Comments } from './comments/entities/comment.entity';
-import { UsersModule } from './users/users.module';
+import { Users } from './users/entities/user.entity';
+import { UsersService } from './users/users.service';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -23,10 +25,10 @@ import { UsersModule } from './users/users.module';
       username: 'root',
       password: 'Emma@2023',
       database: 'blog',
-      entities: [Post, Category, Comments, Subscription],
+      entities: [Post, Category, Comments, Subscription, Users],
       synchronize: true, // set to false in production
-    }), TypeOrmModule.forFeature([Post, Category, Comments, Subscription]), UsersModule,
-  ],providers: [PostsService, CategoryService, CommentsService, SubscriptionsService],
-  controllers: [PostsController, CategoryController, CommentsController, SubscriptionsController]
+    }), TypeOrmModule.forFeature([Post, Category, Comments, Subscription, Users]),
+  ],providers: [PostsService, CategoryService, CommentsService, SubscriptionsService, UsersService],
+  controllers: [PostsController, CategoryController, CommentsController, SubscriptionsController, UsersController]
 })
 export class AppModule {}
