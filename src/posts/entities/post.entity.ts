@@ -10,7 +10,4 @@ export class Post {
 
     @Column()
     body: string
-
-    @Column()
-    isDeleted: boolean
 }
