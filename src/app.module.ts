@@ -12,6 +12,7 @@ import { SubscriptionsService } from './subscriptions/subscriptions.service';
 import { CommentsController } from './comments/comments.controller';
 import { SubscriptionsController } from './subscriptions/subscriptions.controller';
 import { Comments } from './comments/entities/comment.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { Comments } from './comments/entities/comment.entity';
       database: 'blog',
       entities: [Post, Category, Comments, Subscription],
       synchronize: true, // set to false in production
-    }), TypeOrmModule.forFeature([Post, Category, Comments, Subscription]),
+    }), TypeOrmModule.forFeature([Post, Category, Comments, Subscription]), UsersModule,
   ],providers: [PostsService, CategoryService, CommentsService, SubscriptionsService],
   controllers: [PostsController, CategoryController, CommentsController, SubscriptionsController]
 })
