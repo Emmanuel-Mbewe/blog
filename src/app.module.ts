@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Post } from './posts/entities/post.entity';
-import { PostsService } from './posts/posts.service';
-import { PostsController } from './posts/posts.controller';
+import { Posts } from './posts/entities/post.entity';
 import { Category } from './category/entities/category.entity';
 import { CategoryService } from './category/category.service';
 import { CategoryController } from './category/category.controller';
 import { Subscription } from './subscriptions/entities/subscription.entity';
-import { CommentsService } from './comments/comments.service';
+import { CommentService } from './comments/comments.service';
 import { SubscriptionsService } from './subscriptions/subscriptions.service';
-import { CommentsController } from './comments/comments.controller';
+import { CommentController } from './comments/comments.controller';
 import { SubscriptionsController } from './subscriptions/subscriptions.controller';
 import { Comments } from './comments/entities/comment.entity';
 import { User } from './users/entities/user.entity';
 import { UsersService } from './users/users.service';
 import { UsersController } from './users/users.controller';
+import { PostController } from './posts/posts.controller';
+import { PostService } from './posts/posts.service';
 
 @Module({
   imports: [
@@ -25,10 +25,10 @@ import { UsersController } from './users/users.controller';
       username: 'root',
       password: 'Emma@2023',
       database: 'blog',
-      entities: [Post, Category, Comments, Subscription, User],
+      entities: [Posts, Category, Comments, Subscription, User],
       synchronize: true, // set to false in production
-    }), TypeOrmModule.forFeature([Post, Category, Comments, Subscription, User]),
-  ],providers: [PostsService, CategoryService, CommentsService, SubscriptionsService, UsersService],
-  controllers: [PostsController, CategoryController, CommentsController, SubscriptionsController, UsersController]
+    }), TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
+  ],providers: [PostService, CategoryService, CommentService, SubscriptionsService, UsersService],
+  controllers: [PostController, CategoryController, CommentController, SubscriptionsController, UsersController]
 })
 export class AppModule {}

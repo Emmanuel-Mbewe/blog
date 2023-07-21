@@ -2,7 +2,7 @@ import { Comments } from 'src/comments/entities/comment.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity({name: 'posts'})
-export class Post {
+export class Posts {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,6 +15,6 @@ export class Post {
   @Column({ default: () => 'CURRENT_TIMESTAMP' }) // This is just a default value
   postedOn: Date;
 
-  @OneToMany(() => Comments, comment => comment.post)
-  comment: Comment[];
+  @OneToMany(() => Comments, comment => comment.post, { cascade: true })
+  comments: Comment[];
 }

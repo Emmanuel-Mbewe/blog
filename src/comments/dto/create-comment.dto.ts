@@ -1,4 +1,4 @@
 export class CreateCommentDto {
     comment: string;
-    comment_date: Date;
+    commented_date: Date;
 }

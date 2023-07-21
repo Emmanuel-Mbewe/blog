@@ -1,35 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CommentsService } from './comments.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import { Controller, Post, Body, Param, NotFoundException, Get } from '@nestjs/common';
+import { CommentService } from './comments.service';
 import { Comments } from './entities/comment.entity';
 
 @Controller('comments')
-export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) {}
+export class CommentController {
+  constructor(private readonly commentService: CommentService) {}
 
-  @Post()
-  create(@Body() comment: Comments) {
-    return this.commentsService.create(comment);
+  @Post(':postId')
+  async createComment(
+    @Param('postId') postId: number,
+    @Body('text') text: string,
+  ) {
+    try {
+      const comment = await this.commentService.createComment(postId, text);
+      return { success: true, comment };
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 
   @Get()
-  findAll() {
-    return this.commentsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.commentsService.findOne(+id);
-  }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
-  //   return this.commentsService.update(+id, updateCommentDto);
-  // }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commentsService.remove(+id);
+  async findAll(): Promise<Comments []> {
+    return this.commentService.findAll();
   }
 }
