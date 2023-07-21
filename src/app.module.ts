@@ -13,8 +13,9 @@ import { Comments } from './comments/entities/comment.entity';
 import { User } from './users/entities/user.entity';
 import { UsersService } from './users/users.service';
 import { UsersController } from './users/users.controller';
-import { PostController } from './posts/posts.controller';
-import { PostService } from './posts/posts.service';
+import { PostsService } from './posts/posts.service';
+import { PostsController } from './posts/posts.controller';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 @Module({
   imports: [
@@ -28,7 +29,21 @@ import { PostService } from './posts/posts.service';
       entities: [Posts, Category, Comments, Subscription, User],
       synchronize: true, // set to false in production
     }), TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
-  ],providers: [PostService, CategoryService, CommentService, SubscriptionsService, UsersService],
-  controllers: [PostController, CategoryController, CommentController, SubscriptionsController, UsersController]
+  ],providers: [PostsService, CategoryService, CommentService, SubscriptionsService, UsersService],
+  controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, UsersController]
 })
-export class AppModule {}
+export class AppModule {
+  // Optional: Swagger configuration method
+  static setupSwagger() {
+    const options = new DocumentBuilder()
+      .setTitle('Your API Title')
+      .setDescription('API Description')
+      .setVersion('1.0')
+      .addTag('tag1')
+      .addTag('tag2')
+      .build();
+
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup('api', app, document);
+  }
+}

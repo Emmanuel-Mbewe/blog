@@ -1,23 +1,40 @@
-import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import { PostsService } from './posts.service';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 import { Posts } from './entities/post.entity';
-import { PostService } from './posts.service';
 
 @Controller('posts')
-export class PostController {
-  constructor(private readonly postService: PostService) {}
+export class PostsController {
+  constructor(private readonly postsService: PostsService) {}
+
+  @Post()
+  create(@Body() createPostDto: CreatePostDto) {
+    return this.postsService.create(createPostDto);
+  }
 
   @Get()
   async findAll(): Promise<Posts[]> {
-    return this.postService.findAll();
+    return this.postsService.findAll();
   }
 
   @Get(':id')
   async findOneWithComments(@Param('id') id: number) {
     try {
-      const post = await this.postService.findOneWithComments(id);
+      const post = await this.postsService.findOneWithComments(id);
       return { success: true, post };
     } catch (error) {
       throw new NotFoundException(error.message);
     }
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return this.postsService.update(+id, updatePostDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.postsService.remove(+id);
   }
 }
