@@ -10,6 +10,7 @@ export class PostsService {
   constructor(
     @InjectRepository(Post) private postRepository: Repository<Post>
   ){}
+  
   create(createPostDto: CreatePostDto) {
     return this.postRepository.save(createPostDto);
   }
