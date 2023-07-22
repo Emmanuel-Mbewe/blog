@@ -7,10 +7,8 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post(':postId')
-  async createComment(
-    @Param('postId') postId: number,
-    @Body('text') text: string,
-  ) {
+    async createComment(@Param('postId') postId: number, @Body('text') text: string,
+    ) {
     try {
       const comment = await this.commentService.createComment(postId, text);
       return { success: true, comment };

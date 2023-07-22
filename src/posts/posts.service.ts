@@ -1,21 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Posts } from './entities/post.entity';
+import { Category } from 'src/category/entities/category.entity';
 
 @Injectable()
 export class PostsService {
   constructor(
-    @InjectRepository(Posts)
-    private readonly postRepository: Repository<Posts>,
-  ) {}
+    @InjectRepository(Posts) private readonly postRepository: Repository<Posts>,
+    @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+  ){}
 
-  create(createPostDto: CreatePostDto) {
-    return this.postRepository.save(createPostDto);
+  async createPost(id: number, title: string, content: string): Promise<Posts> {
+    const category = await this.categoryRepository.findOneBy({id});
+    if (!category) {
+      throw new Error(`Post with ID ${id} not found.`);
+    }
+
+    const newPost = new Posts();
+    newPost.title = title;
+    newPost.content = content;
+    newPost.category = category;
+
+    return this.postRepository.save(newPost);
   }
-
+  
   async findAll(): Promise<Posts[]> {
     return this.postRepository.find({ relations: ['comments'] });
   }
@@ -30,10 +39,6 @@ export class PostsService {
 
   findOne(id: number) {
     return this.postRepository.findOneBy({id});
-  }
-
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return this.postRepository.save(updatePostDto);
   }
 
   remove(id: number) {

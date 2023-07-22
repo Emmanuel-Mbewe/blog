@@ -7,11 +7,9 @@ import { Posts } from 'src/posts/entities/post.entity';
 @Injectable()
 export class CommentService {
   constructor(
-    @InjectRepository(Comments)
-    private readonly commentRepository: Repository<Comments>,
-    @InjectRepository(Posts)
-    private readonly postRepository: Repository<Posts>,
-  ) {}
+    @InjectRepository(Comments) private readonly commentRepository: Repository<Comments>,
+    @InjectRepository(Posts) private readonly postRepository: Repository<Posts>,
+  ){}
 
   async createComment(postId: number, text: string): Promise<Comments> {
     const post = await this.postRepository.findOneBy({});
@@ -33,11 +31,7 @@ export class CommentService {
   findOne(id: number) {
     return this.commentRepository.findOneBy({id});
   }
-
-  // update(id: number, updateCommentDto: UpdateCommentDto) {
-  //   return this.commentRepository.save(updateCommentDto);
-  // }
-
+  
   remove(id: number) {
     return this.commentRepository.delete(id);
   }
