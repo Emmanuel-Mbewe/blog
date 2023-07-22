@@ -19,10 +19,13 @@ export class PostsService {
   async createPost(id: number, title: string, content: string): Promise<Posts> {
     //Koma katogoleyo ilipo?
     const category = await this.categoryRepository.findOneBy({id});
+    const post = await this.postRepository.findBy({title});
     if (!category) {
       //Ngati palibe, onetsani uthenga wosonyeza kuti palibe
-      throw new Error(`Post with ID ${id} not found.`);
-    }
+      throw new Error(`Category with id ${id} not found.`);
+    }else if(post){
+      throw new Error(`The post with the title ${title} aleady exists`);
+    }else{
     //Koma ngati lilipo, ponyani post mu nkhokwe yosungiramo
     const newPost = new Posts();
     //Mutu wa positi
@@ -34,6 +37,7 @@ export class PostsService {
 
     //Basitu ikani positi mu nkhokwe
     return this.postRepository.save(newPost);
+    }
   }
   
   //Fetching all posts from the database
