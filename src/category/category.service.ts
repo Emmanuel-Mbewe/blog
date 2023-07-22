@@ -1,6 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
@@ -14,8 +12,20 @@ export class CategoryService {
   ){}
 
   //Creating the new category in the database
-  create(createCategoryDto: CreateCategoryDto) {
-    return this.categoryRepository.save(createCategoryDto);
+  async createCategory(name: string): Promise<Category> {
+    //Koma katigoleyo ilipo?
+    const category = await this.categoryRepository.findOneBy({name});
+    if (category) {
+      //Ngati palibe, onetsani uthenga wosonyeza kuti palibe
+      throw new Error(`Category with name ${name} aleady exists`);
+    }
+    //Koma ngati lilipo, ponyani Category mu nkhokwe yosungiramo
+    const newCategory = new Category();
+    //name of the category
+    newCategory.name = name;
+
+    //Basitu ikani katogore mu nkhokwe
+    return this.categoryRepository.save(newCategory);
   }
 
   //Fetching all the categories from the database
@@ -24,14 +34,16 @@ export class CategoryService {
   }
 
   //Fetching one category by id number from the database
-  findOne(id: number) {
-    return this.categoryRepository.findOneBy({id});
+  async findOne(id: number) {
+  //Get a category from the database
+  const category = await this.categoryRepository.findOneBy({id});
+  if (!category) {
+    //If the category is not available, then throw an error
+    throw new NotFoundException(`category with ID ${id} not found.`);
   }
-
-  //Updating the category
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return this.categoryRepository.save(updateCategoryDto);
-  }
+  //Otherwise return the category
+  return category;
+}
 
   //Deleting a category from the database by id
   remove(id: number) {
