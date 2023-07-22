@@ -1,6 +1,7 @@
 import { Posts } from "src/posts/entities/post.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+//User entity class
 @Entity({name: 'users'})
 export class User{
     @PrimaryGeneratedColumn()
