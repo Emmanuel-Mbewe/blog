@@ -11,14 +11,14 @@ export class CommentService {
     @InjectRepository(Posts) private readonly postRepository: Repository<Posts>,
   ){}
 
-  async createComment(postId: number, text: string): Promise<Comments> {
+  async createComment(postId: number, comment: string): Promise<Comments> {
     const post = await this.postRepository.findOneBy({});
     if (!post) {
       throw new Error(`Post with ID ${postId} not found.`);
     }
 
     const newComment = new Comments();
-    newComment.text = text;
+    newComment.comment = comment;
     newComment.post = post;
 
     return this.commentRepository.save(newComment);

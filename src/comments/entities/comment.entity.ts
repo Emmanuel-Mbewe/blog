@@ -7,10 +7,10 @@ export class Comments {
   id: number;
 
   @Column()
-  text: string;
+  comment: string;
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' }) // This is just a default value
-  commentedOn: Date;
+  comment_date: Date;
 
   @ManyToOne(() => Posts, post => post.comments)
   post: Posts;

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Posts } from "src/posts/entities/post.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'users'})
 export class User{
@@ -19,4 +20,7 @@ export class User{
 
     @Column()
     email: string;
+
+    @OneToMany(() => Posts, post => post.author, { cascade: true })
+    posts: Comment[];
 }

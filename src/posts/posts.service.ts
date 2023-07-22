@@ -26,7 +26,7 @@ export class PostsService {
   }
   
   async findAll(): Promise<Posts[]> {
-    return this.postRepository.find({ relations: ['comments'] });
+    return this.postRepository.find({ relations: ['category','comments'] });
   }
 
   async findOneWithComments(id: number): Promise<Posts> {
