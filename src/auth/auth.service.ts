@@ -26,12 +26,12 @@ export class AuthService{
    async login({email, password}: LoginDTO) {
     try{
       const user = await this.userRepository.findOne({ where: {email} });
-      if(user && user.comparePassword(password)){
+      if(user && (await user.comparePassword(password))){
         return user;
       }
       throw new UnauthorizedException('Invalid credentials');
     }catch(err){
-      throw new InternalServerErrorException();
+      throw new UnauthorizedException('Invalid credentials');
     }
   }
 }
