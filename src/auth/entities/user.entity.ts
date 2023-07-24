@@ -1,4 +1,3 @@
-
 import { BeforeInsert, Column, Entity } from "typeorm";
 import { AbstractEntity } from "./abstract.entity";
 import * as bcrypt from 'bcrypt';
