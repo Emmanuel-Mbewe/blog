@@ -15,6 +15,8 @@ import { PostsController } from './posts/posts.controller';
 import { User } from './auth/entities/user.entity';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -28,6 +30,13 @@ import { AuthController } from './auth/auth.controller';
       entities: [Posts, Category, Comments, Subscription, User],
       synchronize: true, // set to false in production
     }), TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
+    JwtModule.register({
+      secret: process.env.SECRET,
+      signOptions: {
+        expiresIn: 86400000,
+      }
+    }),
+    PassportModule.register({defaultStrategy: 'jwt'}),
   ],providers: [PostsService, CategoryService, CommentService, SubscriptionsService, AuthService],
   controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, AuthController]
 })
