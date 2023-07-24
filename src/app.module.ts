@@ -17,6 +17,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { PassportModule } from '@nestjs/passport';
       database: 'blog',
       entities: [Posts, Category, Comments, Subscription, User],
       synchronize: true, // set to false in production
-    }), TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
+    }), 
+    TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
     JwtModule.register({
       secret: process.env.SECRET,
       signOptions: {
@@ -37,7 +39,9 @@ import { PassportModule } from '@nestjs/passport';
       }
     }),
     PassportModule.register({defaultStrategy: 'jwt'}),
-  ],providers: [PostsService, CategoryService, CommentService, SubscriptionsService, AuthService],
-  controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, AuthController]
+  ],
+  providers: [PostsService, CategoryService, CommentService, SubscriptionsService, AuthService, JwtStrategy],
+  controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, AuthController],
+  exports: [PassportModule, JwtStrategy],
 })
 export class AppModule {}
