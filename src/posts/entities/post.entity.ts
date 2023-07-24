@@ -1,6 +1,6 @@
+import { User } from 'src/auth/entities/user.entity';
 import { Category } from 'src/category/entities/category.entity';
 import { Comments } from 'src/comments/entities/comment.entity';
-import { User } from 'src/users/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
 
 //Entity class of post resource
@@ -31,6 +31,6 @@ export class Posts {
   category: Category;
 
   //Referencing the users table.... Each post is poted by the single user
-  @ManyToOne(() => User, user => user.posts)
-  author: User;
+  // @ManyToOne(() => User, user => user.posts)
+  // author: User;
 }
