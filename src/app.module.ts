@@ -15,6 +15,7 @@ import { UsersService } from './users/users.service';
 import { UsersController } from './users/users.controller';
 import { PostsService } from './posts/posts.service';
 import { PostsController } from './posts/posts.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { PostsController } from './posts/posts.controller';
       database: 'blog',
       entities: [Posts, Category, Comments, Subscription, User],
       synchronize: true, // set to false in production
-    }), TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
+    }), TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]), AuthModule,
   ],providers: [PostsService, CategoryService, CommentService, SubscriptionsService, UsersService],
   controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, UsersController]
 })
