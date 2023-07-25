@@ -15,12 +15,10 @@ export class AuthService{
   async register(credentials: RegistrationDTO) {
     try{
       const user = this.userRepository.create(credentials);
-      // const payload = {user_name: user.user_name};
-      // const token = this.jwtService.sign(payload);
+      const payload = {user_name: user.user_name};
+      const token = this.jwtService.sign(payload);
       await user.save();
-      // return {user: {...user.toJSON, token}};
-
-      return "User saved successfully";
+      return {user: {...user.toJSON, token}};
     }catch(error){
       throw new ConflictException('Username already taken');
     }
@@ -33,10 +31,9 @@ export class AuthService{
       if(!isValid){
         throw new UnauthorizedException('Invalid credentials');
       }
-      // const payload = {user_name: user.user_name};
-      // const token = this.jwtService.sign(payload);
-      // return {user: {...user.toJSON, token}};
-      return "Loged in successfully";
+      const payload = {user_name: user.user_name};
+      const token = this.jwtService.sign(payload);
+      return {user: {...user.toJSON, token}};
     }catch(error){
       throw new UnauthorizedException('Inavalid credentials');
     }

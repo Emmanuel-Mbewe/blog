@@ -5,9 +5,6 @@ import { Category } from './category/entities/category.entity';
 import { Subscription } from './subscriptions/entities/subscription.entity';
 import { Comments } from './comments/entities/comment.entity';
 import { User } from './auth/entities/user.entity';
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './auth/jwt.strategy';
 import { PostsService } from './posts/posts.service';
 import { CategoryService } from './category/category.service';
 import { CommentService } from './comments/comments.service';
@@ -19,6 +16,7 @@ import { CommentController } from './comments/comments.controller';
 import { SubscriptionsController } from './subscriptions/subscriptions.controller';
 import { AuthController } from './auth/auth.controller';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -34,17 +32,9 @@ import { UserModule } from './user/user.module';
       synchronize: true, // set to false in production
     }), 
     TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
-    JwtModule.register({
-      secret: process.env.SECRET,
-      signOptions: {
-        expiresIn: 86400000,
-      }
-    }),
-    PassportModule.register({defaultStrategy: 'jwt'}),
-    UserModule
+    UserModule, AuthModule
   ],
-  providers: [PostsService, CategoryService, CommentService, SubscriptionsService, AuthService, JwtStrategy],
-  controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, AuthController],
-  exports: [PassportModule, JwtStrategy],
+  providers: [PostsService, CategoryService, CommentService, SubscriptionsService],
+  controllers: [PostsController, CategoryController, CommentController, SubscriptionsController],
 })
 export class AppModule {}
