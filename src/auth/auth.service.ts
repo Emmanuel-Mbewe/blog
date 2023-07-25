@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
+import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { LoginDTO, RegistrationDTO } from "src/auth/dto/user.dto";
 import { User } from "./entities/user.entity";
