@@ -18,6 +18,7 @@ import { CategoryController } from './category/category.controller';
 import { CommentController } from './comments/comments.controller';
 import { SubscriptionsController } from './subscriptions/subscriptions.controller';
 import { AuthController } from './auth/auth.controller';
+import { UserModule } from './user/user.module';
 
 
 @Module({
@@ -39,7 +40,8 @@ import { AuthController } from './auth/auth.controller';
         expiresIn: 86400000,
       }
     }),
-    PassportModule.register({defaultStrategy: 'jwt'})
+    PassportModule.register({defaultStrategy: 'jwt'}),
+    UserModule
   ],
   providers: [PostsService, CategoryService, CommentService, SubscriptionsService, AuthService, JwtStrategy],
   controllers: [PostsController, CategoryController, CommentController, SubscriptionsController, AuthController],
