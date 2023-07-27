@@ -26,7 +26,7 @@ import { AuthModule } from './auth/auth.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'Emma@2023',
+      password: '123456789',
       database: 'blog',
       entities: [Posts, Category, Comments, Subscription, User],
       synchronize: true, // set to false in production
