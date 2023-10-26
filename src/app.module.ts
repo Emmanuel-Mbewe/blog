@@ -15,6 +15,7 @@ import { CommentController } from './comments/comments.controller';
 import { SubscriptionsController } from './subscriptions/subscriptions.controller';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { LibraryModule } from './library/library.module';
 
 
 @Module({
@@ -30,7 +31,7 @@ import { AuthModule } from './auth/auth.module';
       synchronize: true, // set to false in production
     }), 
     TypeOrmModule.forFeature([Posts, Category, Comments, Subscription, User]),
-    UserModule, AuthModule
+    UserModule, AuthModule, LibraryModule
   ],
   providers: [PostsService, CategoryService, CommentService, SubscriptionsService],
   controllers: [PostsController, CategoryController, CommentController, SubscriptionsController],
