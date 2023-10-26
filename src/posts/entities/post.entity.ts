@@ -1,4 +1,3 @@
-import { User } from 'src/auth/entities/user.entity';
 import { Category } from 'src/category/entities/category.entity';
 import { Comments } from 'src/comments/entities/comment.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';

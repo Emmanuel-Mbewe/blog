@@ -9,12 +9,10 @@ import { PostsService } from './posts/posts.service';
 import { CategoryService } from './category/category.service';
 import { CommentService } from './comments/comments.service';
 import { SubscriptionsService } from './subscriptions/subscriptions.service';
-import { AuthService } from './auth/auth.service';
 import { PostsController } from './posts/posts.controller';
 import { CategoryController } from './category/category.controller';
 import { CommentController } from './comments/comments.controller';
 import { SubscriptionsController } from './subscriptions/subscriptions.controller';
-import { AuthController } from './auth/auth.controller';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 

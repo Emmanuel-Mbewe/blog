@@ -17,13 +17,13 @@ export class PostsService {
 
   //Creating a post of dome category
   async createPost(id: number, title: string, content: string): Promise<Posts> {
-    //Koma katogoleyo ilipo?
+    //Koma katigoleyo ilipo?
     const category = await this.categoryRepository.findOneBy({id});
     const post = await this.postRepository.findBy({title});
     if (!category) {
       //Ngati palibe, onetsani uthenga wosonyeza kuti palibe
       throw new Error(`Category with id ${id} not found.`);
-    }else if(post){
+    }else if(!post){
       throw new Error(`The post with the title ${title} aleady exists`);
     }else{
     //Koma ngati lilipo, ponyani post mu nkhokwe yosungiramo
